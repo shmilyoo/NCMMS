@@ -1,0 +1,17 @@
+﻿<UserControl x:Class="NCMMS.StartPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="585" d:DesignWidth="996">
+    <Border Style="{StaticResource BorderInCanvasStyle}">
+        <Grid>
+            <Canvas>
+                <TextBlock x:Name="a" Canvas.Left="100" Canvas.Top="200">初始页面</TextBlock>
+                <TextBlock x:Name="b" Canvas.Left="200" Canvas.Top="300">初始页面212</TextBlock>
+            </Canvas>
+        </Grid>
+           
+    </Border>
+</UserControl>

@@ -1,0 +1,150 @@
+﻿<local:MyWindow
+        xmlns:local="clr-namespace:NCMMS"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:my="clr-namespace:NCMMS.UC"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="NCMMS.Topology.Topo"
+        WindowTitle="拓扑发现和管理" BtnMaxFlag="True" Style="{StaticResource WindowNoStyle}"  WindowStartupLocation="CenterOwner" Height="748" Width="1024">
+	<local:MyWindow.Resources>
+        <ContextMenu x:Key="lineContextMenu" Width="100">
+            <MenuItem Header="连线信息"></MenuItem>
+        </ContextMenu>
+		<Storyboard x:Key="sbSearching" Timeline.DesiredFrameRate="30"  RepeatBehavior="Forever"><!-- 搜索的时候转动的loading图形 -->
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)" Storyboard.TargetName="searchingCircle">
+				<EasingDoubleKeyFrame KeyTime="0:0:1" Value="359"/>
+			</DoubleAnimationUsingKeyFrames>
+		</Storyboard>
+        <Storyboard x:Key="sbDrawToolbarSlider" Timeline.DesiredFrameRate="30"><!-- 左侧边栏移出 -->
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="drawToolbar">
+				<EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="80"/>
+			</DoubleAnimationUsingKeyFrames>
+			<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)" Storyboard.TargetName="sliderBtn">
+				<EasingDoubleKeyFrame KeyTime="0" Value="180"/>
+			</DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="sbDrawToolbarSliderClose" Timeline.DesiredFrameRate="30"><!-- 左侧边栏移出入 -->
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="drawToolbar">
+                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)" Storyboard.TargetName="sliderBtn">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Style TargetType="my:UCEquipIcon">
+            <Setter Property="Canvas.ZIndex" Value="5" />
+        </Style>
+        <Style TargetType="Line">
+            <Setter Property="Canvas.ZIndex" Value="4" />
+            <Setter Property="Stroke" Value="Lime" /> 
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+            <Setter Property="StrokeThickness" Value="2" />
+        </Style>
+        <Style x:Key="btnDrawAddBtnStyle" TargetType="Button">
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Width" Value="40"/>
+            <Setter Property="Margin" Value="0,20,0,0"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+        </Style>
+    </local:MyWindow.Resources>
+
+    <Grid x:Name="grid" Background="#5000">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="34" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="20" />
+        </Grid.RowDefinitions>
+        <!--<ToolBar x:Name="toolbar" Background="White" BorderThickness="0" >
+        </ToolBar>-->
+        <StackPanel x:Name="spToolBar" Background="White" Orientation="Horizontal">
+            <CheckBox x:Name="cbIsListenTrap" Content="接收TRAP"></CheckBox>
+            <Button x:Name="btnRestartDetect" Click="btnRestartDetect_Click">重新绘制</Button>
+            <Button x:Name="btnUpdateDB" Click="btnUpdateDB_Click">更新数据库</Button>
+            
+        </StackPanel>
+        <!--下方状态栏显示 提示消息，trap监听状态，trap最新消息（提供打开列表按钮）-->
+        <StatusBar Grid.Row="2" x:Name="statusBar">
+            <StatusBarItem>
+                <Grid Height="20" Width="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=StatusBarItem, AncestorLevel=1}, Path=ActualWidth}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="150" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="20" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock x:Name="tbStatusMessage"/>
+                    <Border Grid.Column="1" BorderThickness="1,0,1,0" BorderBrush="Gray">
+                        <TextBlock x:Name="tbTrapStatus" Text="Trap接收: 关" HorizontalAlignment="Center"/>
+                    </Border>
+                    <TextBlock x:Name="tbLatestTrapMessage" Text="Trap最新消息" Grid.Column="2" HorizontalAlignment="Right"/>
+                    <Image Grid.Column="3" Source="/NCMMS;component/Images/singleColumn.png" Width="20" Height="20">
+                    </Image>
+                </Grid>
+            </StatusBarItem>
+
+        </StatusBar>
+        <Grid x:Name="loadingGrid" Opacity="0.5"  Grid.Row="1" Panel.ZIndex="99" Background="#6FFF" Visibility="Hidden">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="80" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="40" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="4*" />
+                <ColumnDefinition Width="500" />
+                <ColumnDefinition Width="3*" />
+            </Grid.ColumnDefinitions>
+            <ListBox Grid.Column="1" Grid.Row="1" Margin="0,15"  x:Name="lbSearchingMessage" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Black" />
+            <TextBlock x:Name="tbDetectlabel" Text="正在探测网络、绘制拓扑……" Grid.Column="1" VerticalAlignment="Bottom" Margin="70,0,0,12" FontSize="15"></TextBlock>
+			<Canvas x:Name="searchingCircle" Grid.Column="1" HorizontalAlignment="Left" Margin="270,0,0,0"  Height="40" VerticalAlignment="Bottom" Width="40" RenderTransformOrigin="0.5,0.5">
+				<Canvas.RenderTransform>
+					<RotateTransform/>
+				</Canvas.RenderTransform>
+        		<Path Data="F1M38.3672,21.5713C38.3672,22.0863,37.9512,22.5013,37.4372,22.5013C36.9232,22.5013,36.5092,22.0863,36.5092,21.5713C36.5092,21.0553,36.9232,20.6393,37.4372,20.6393C37.9512,20.6393,38.3672,21.0553,38.3672,21.5713" Fill="#FFE6E6E6" Height="1.862" Canvas.Left="34.5" Stretch="Fill" Canvas.Top="19.801" Width="1.858"/>
+        		<Path Data="F1M35.335,31.6816C35.335,32.4836,34.686,33.1306,33.885,33.1306C33.084,33.1306,32.437,32.4836,32.437,31.6816C32.437,30.8786,33.084,30.2306,33.885,30.2306C34.686,30.2306,35.335,30.8786,35.335,31.6816" Fill="#FFD4D4D4" Height="2.9" Canvas.Left="30.428" Stretch="Fill" Canvas.Top="29.393" Width="2.898"/>
+        		<Path Data="F1M26.9482,37.3076C26.9482,38.3976,26.0662,39.2776,24.9792,39.2776C23.8912,39.2776,23.0102,38.3976,23.0102,37.3076C23.0102,36.2186,23.8912,35.3376,24.9792,35.3376C26.0662,35.3376,26.9482,36.2186,26.9482,37.3076" Fill="#FFC1C1C1" Height="3.94" Canvas.Left="21.001" Stretch="Fill" Canvas.Top="34.5" Width="3.938"/>
+        		<Path Data="F1M16.6543,36.0918C16.6543,37.4678,15.5393,38.5808,14.1653,38.5808C12.7913,38.5808,11.6763,37.4678,11.6763,36.0918C11.6763,34.7158,12.7913,33.6028,14.1653,33.6028C15.5393,33.6028,16.6543,34.7158,16.6543,36.0918" Fill="#FFAFAFAF" Height="4.978" Canvas.Left="9.667" Stretch="Fill" Canvas.Top="32.765" Width="4.978"/>
+        		<Path Data="F1M9.7607,28.6797C9.7607,30.3427,8.4117,31.6887,6.7517,31.6887C5.0907,31.6887,3.7447,30.3427,3.7447,28.6797C3.7447,27.0167,5.0907,25.6707,6.7517,25.6707C8.4117,25.6707,9.7607,27.0167,9.7607,28.6797" Fill="#FF9D9D9D" Height="6.018" Canvas.Left="1.735" Stretch="Fill" Canvas.Top="24.833" Width="6.016"/>
+        		<Path Data="F1M9.0654,17.8638C9.0654,19.8138,7.4834,21.3928,5.5374,21.3928C3.5884,21.3928,2.0094,19.8138,2.0094,17.8638C2.0094,15.9138,3.5884,14.3358,5.5374,14.3358C7.4834,14.3358,9.0654,15.9138,9.0654,17.8638" Fill="#FF8B8B8B" Height="7.057" Canvas.Left="0" Stretch="Fill" Canvas.Top="13.498" Width="7.056"/>
+        		<Path Data="F1M15.2119,8.9561C15.2119,11.1941,13.3979,13.0051,11.1639,13.0051C8.9299,13.0051,7.1169,11.1941,7.1169,8.9561C7.1169,6.7201,8.9299,4.9081,11.1639,4.9081C13.3979,4.9081,15.2119,6.7201,15.2119,8.9561" Fill="#FF787878" Height="8.097" Canvas.Left="5.108" Stretch="Fill" Canvas.Top="4.07" Width="8.095"/>
+        		<Path Data="F1M25.8408,5.4048C25.8408,7.9298,23.7928,9.9738,21.2738,9.9738C18.7518,9.9738,16.7058,7.9298,16.7058,5.4048C16.7058,2.8818,18.7518,0.837800000000001,21.2738,0.837800000000001C23.7928,0.837800000000001,25.8408,2.8818,25.8408,5.4048" Fill="#FF666666" Height="9.136" Canvas.Left="14.696" Stretch="Fill" Canvas.Top="0" Width="9.135"/>
+			</Canvas>
+            <Button x:Name="btnStopDetect" Content="强制停止" Click="btnStopDetect_Click"  Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="40,0,0,0"  Width="70" Height="25" />
+            <Button x:Name="btnCloseLoadingGrid" Content="关闭" Click="btnCloseLoadingGrid_Click" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,0,40,0"  Width="70" Height="25" />
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" /><!-- 画图面板，移进移出 -->
+                <ColumnDefinition Width="7" /> <!-- 移进移出按钮 -->
+                <ColumnDefinition Width="*" /><!-- 主显示区域 -->
+            </Grid.ColumnDefinitions>
+            <Canvas x:Name="canvas" ClipToBounds="True" Grid.Column="2" MouseMove="canvas_MouseMove" MouseEnter="canvas_MouseEnter" MouseLeave="canvas_MouseLeave" MouseRightButtonDown="canvas_MouseRightButtonDown" MouseLeftButtonDown="canvas_MouseLeftButtonDown">
+                <Canvas.Background>
+                    <ImageBrush Opacity="0.1" ImageSource="/NCMMS;component/Images/worldmap.png" />
+                </Canvas.Background>
+                </Canvas>
+            <Grid x:Name="drawToolbar" Background="White" Width="0">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel>
+                        <TextBlock Text ="绘图工具"></TextBlock>
+                        <Button x:Name="btnDrawRouter" Style="{StaticResource btnDrawAddBtnStyle}" Click="btnDrawRouter_Click">路由器</Button>
+                        <Button x:Name="btnDrawL3Sw" Style="{StaticResource btnDrawAddBtnStyle}" Click="btnDrawL3Sw_Click">3层交换机</Button>
+                        <Button x:Name="btnDrawL2Sw" Style="{StaticResource btnDrawAddBtnStyle}" Click="btnDrawL2Sw_Click">2层交换机</Button>
+                        <Button x:Name="btnDrawServer" Style="{StaticResource btnDrawAddBtnStyle}" Click="btnDrawServer_Click">服务器</Button>
+                        <Button x:Name="btnDrawPC" Style="{StaticResource btnDrawAddBtnStyle}" Click="btnDrawPC_Click">PC</Button>
+                        <Button x:Name="btnDrawFireWall" Style="{StaticResource btnDrawAddBtnStyle}" Click="btnDrawFireWall_Click">防火墙</Button>
+                        <Button x:Name="btnDrawLine" Style="{StaticResource btnDrawAddBtnStyle}" Click="btnDrawLine_Click">线</Button>
+                        <Button x:Name="btnDrawCancel" Style="{StaticResource btnDrawAddBtnStyle}" Click="btnDrawCancel_Click">取消</Button>
+                        <Button Style="{StaticResource btnDrawAddBtnStyle}">防火墙</Button>
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
+            <Border Grid.Column="1" Background="#5FFF">
+            	<Path x:Name="sliderBtn" Cursor="Hand" Data="M1.3125,0.874499999999999L4.2435,5.1185L1.1675,9.2915" Height="10" Stroke="Black" StrokeThickness="3" StrokeMiterLimit="10" StrokeLineJoin="Miter" RenderTransformOrigin="0.5,0.5" MouseLeftButtonDown="sliderBtn_MouseLeftButtonDown">
+            		<Path.RenderTransform>
+            			<RotateTransform/>
+            		</Path.RenderTransform>
+            	</Path>
+            </Border>
+        </Grid>
+    </Grid>
+</local:MyWindow>

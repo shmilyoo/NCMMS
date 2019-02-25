@@ -1,0 +1,75 @@
+﻿<UserControl x:Class="NCMMS.PortMonitor.PortMonitorStart"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:commonClass="clr-namespace:NCMMS.CommonClass"
+             xmlns:uc="clr-namespace:NCMMS.UC"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="585" d:DesignWidth="996" xmlns:my="clr-namespace:NCMMS">
+    <UserControl.Resources>
+        <commonClass:BoolToVisibleConverter x:Key="boolToVisibleConverter"></commonClass:BoolToVisibleConverter>
+    </UserControl.Resources>
+    <Border Style="{StaticResource BorderInCanvasStyle}">
+        <Grid ShowGridLines="True">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="40"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition MinHeight="50" Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="100"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Column="1" Grid.Row="2" VerticalAlignment="Center">
+                <Button x:Name="btnAdd" Content="&gt;" Click="btnAdd_Click"/>
+                <Button x:Name="btnRemove" Content="&lt;" Margin="0,5,0,0" Click="btnRemove_Click" />
+                <Button x:Name="btnAddAll" Content="&gt;&gt;" Margin="0,5,0,0" Click="btnAddAll_Click"/>
+                <Button x:Name="btnRemoveAll" Content="&lt;&lt;" Margin="0,5,0,0" Click="btnRemoveAll_Click" />
+            </StackPanel>
+            <StackPanel Grid.Row="1" Orientation="Horizontal" VerticalAlignment="Center">
+                <ComboBox x:Name="cbbSelectEquip" Margin="30,0,0,0" SelectionChanged="cbbSelectEquip_SelectionChanged" Text="请选择设备" HorizontalAlignment="Left" Height="20" Width="120" IsEditable="True"  IsReadOnly="True"></ComboBox>
+                <uc:UCIPTextBox x:Name="tbSearchIP" Grid.Row="1" Margin="10,0,0,0"/>
+                <Button Content="检索" Name="btnSearchIP" Margin="10,0,0,0" Width="40" Click="btnSearchIP_Click"/>
+            </StackPanel>
+            <ListBox x:Name="ifListByEquip" SelectionMode="Extended" Margin="10" Grid.Row="2">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock MouseLeftButtonDown="TextBlock_MouseLeftButtonDown_Left" Text="{Binding Path=Value}"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <ListBox x:Name="ifSelectedList" SelectionMode="Extended" Margin="10" Grid.Row="2" Grid.Column="2">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock MouseLeftButtonDown="TextBlock_MouseLeftButtonDown_Right" Text="{Binding Path=DescrInListBox}"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <TextBlock Text="端口监视" Grid.ColumnSpan="3" Style="{DynamicResource StartPageTBTitle}" />
+            <Button x:Name="btnStartMonitor" Width="70" Height="25" Content="开始监视" Grid.Row="3" Grid.ColumnSpan="3" Click="btnStartMonitor_Click"  HorizontalAlignment="Center" VerticalAlignment="Center" />
+            <StackPanel Orientation="Vertical" Grid.Column="2" Grid.Row="3" Margin="50,0,0,0" HorizontalAlignment="Left"  VerticalAlignment="Center">
+                <CheckBox x:Name="cbStartWithFile" Content="使用已保存列表文件" Click="cbStartWithFile_Click"></CheckBox>
+                <uc:UCFileBrowse x:Name="ucFileBrowse" Visibility="Collapsed" FileFilter="XML文件(xml)|*.xml"></uc:UCFileBrowse>
+            </StackPanel>
+            <ComboBox IsEditable="True" KeyDown="cbbTimerInterval_KeyDown" MouseLeave="cbbTimerInterval_MouseLeave" Grid.Row="3" Height="20" HorizontalAlignment="Left" Margin="336,36,0,0" x:Name="cbbTimerInterval" VerticalAlignment="Top" Width="50">
+                <ComboBox.Items>
+                    <ComboBoxItem Content="1" IsSelected="True"></ComboBoxItem>
+                    <ComboBoxItem Content="2"></ComboBoxItem>
+                    <ComboBoxItem Content="3"></ComboBoxItem>
+                    <ComboBoxItem Content="4"></ComboBoxItem>
+                    <ComboBoxItem Content="5"></ComboBoxItem>
+                    <ComboBoxItem Content="6"></ComboBoxItem>
+                    <ComboBoxItem Content="10"></ComboBoxItem>
+                    <ComboBoxItem Content="15"></ComboBoxItem>
+                    <ComboBoxItem Content="30"></ComboBoxItem>
+                </ComboBox.Items>
+            </ComboBox>
+            <TextBlock Grid.Row="3" HorizontalAlignment="Left" Margin="283,38,0,0" Text="轮询时间" VerticalAlignment="Top" />
+            <TextBlock Grid.Row="3" HorizontalAlignment="Left" Margin="392,38,0,0" Text="秒" VerticalAlignment="Top" />
+        </Grid>
+    </Border>
+</UserControl>

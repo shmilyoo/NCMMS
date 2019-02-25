@@ -1,0 +1,159 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:uc="clr-namespace:NCMMS.UC"
+			 x:Class="NCMMS.Config.ConfigStart"  mc:Ignorable="d" 
+             d:DesignHeight="585" d:DesignWidth="996" Height="585" Width="996">
+	<Border Style="{StaticResource BorderInCanvasStyle}">
+        <TabControl x:Name="tab" Margin="10">
+            <TabItem Header="数据库">
+	        	<Grid ShowGridLines="True">
+	        		<Grid.RowDefinitions>
+	        			<RowDefinition Height="2*"/>
+	        			<RowDefinition Height="*"/>
+	        			<RowDefinition Height="*"/>
+	        			<RowDefinition Height="*"/>
+	        			<RowDefinition Height="*"/>
+	        			<RowDefinition Height="7*"/>
+	        		</Grid.RowDefinitions>
+	        		<Grid.ColumnDefinitions>
+	        			<ColumnDefinition Width="*"/>
+	        			<ColumnDefinition Width="*"/>
+	        			<ColumnDefinition Width="2*"/>
+	        			<ColumnDefinition Width="4*"/>
+	        		</Grid.ColumnDefinitions>
+	        		<Button x:Name="btnTestDataBase"  Content="测试连接" Margin="20.472,56.2,0,0" Click="btnTestDataBase_Click" Grid.Column="1" Grid.Row="5" VerticalAlignment="Top" />
+	        		<Button x:Name="saveDataBaseConfig"  Content="保存" Margin="85.336,56.2,64.304,0" Click="saveDataBaseConfig_Click" Grid.Column="2" Grid.Row="5" VerticalAlignment="Top" />
+	        		<TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Text="数据库地址:" Grid.Column="1" Grid.Row="1"/>
+	        		<uc:UCIPTextBox x:Name="dataBaseIP" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+	        		<TextBlock Grid.Column="1" Grid.Row="3" Text="用户名:" HorizontalAlignment="Left" VerticalAlignment="Center"></TextBlock>
+	        		<TextBlock Grid.Column="1" Grid.Row="4" Text="密码:" HorizontalAlignment="Left" VerticalAlignment="Center"></TextBlock>
+	        		<TextBox x:Name="username" Width="80" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="2" Grid.Row="3"/>
+	        		<PasswordBox x:Name="password" Width="80" PasswordChar="*" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="2" Grid.Row="4"/>
+	        		<TextBlock Grid.Column="1" Grid.Row="2" Text="数据库名：" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+	        		<TextBox x:Name="dataBaseName" Width="80" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="2" Grid.Row="2"/>
+                </Grid>         
+			</TabItem>
+            <TabItem Header="一般">
+                <Grid ShowGridLines="True">
+	        		<Grid.RowDefinitions>
+	        			<RowDefinition Height="2*"/>
+	        			<RowDefinition Height="*"/>
+	        			<RowDefinition Height="*"/>
+	        			<RowDefinition Height="*"/>
+	        			<RowDefinition Height="*"/>
+	        			<RowDefinition Height="7*"/>
+	        		</Grid.RowDefinitions>
+	        		<Grid.ColumnDefinitions>
+	        			<ColumnDefinition Width="*"/>
+	        			<ColumnDefinition Width="*"/>
+	        			<ColumnDefinition Width="4*"/>
+	        			<ColumnDefinition Width="2*"/>
+	        		</Grid.ColumnDefinitions>
+	        		<Button x:Name="btnConfigGeneralOK" Click="btnConfigGeneralOK_Click" Content="确定" Margin="20.472,56.2,0,0" Grid.Column="1" Grid.Row="5" VerticalAlignment="Top" />
+	        		<TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Text="背景图" Grid.Column="1" Grid.Row="1"/>
+	        		<TextBox x:Name="backgroundPicUrl" Width="200" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+	        		<Button x:Name="btnOpenBgPic" Click="btnOpenBgPic_Click" Content="浏览" Margin="210,0,0,0" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" />
+	        		<TextBlock Grid.Column="1" Grid.Row="2" Text="窗体边框颜色：" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+	        		<TextBox x:Name="tbWindowBorderColor" Width="80" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="2" Grid.Row="2"/>
+	        	</Grid> 
+            </TabItem>
+            <TabItem Header="设备管理">
+        		<Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="20" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="2*" />
+                    </Grid.ColumnDefinitions>
+                    <Button Content="刷新页面" Height="20" HorizontalAlignment="Left" Margin="5,0,0,0" x:Name="btnRefresh" VerticalAlignment="Center" Width="60" Click="btnRefresh_Click" />
+                    <TextBlock Text="设备管理" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="14"></TextBlock>
+                    <TextBlock Text="IP地址管理" Grid.Column="1"  HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold" FontSize="14"></TextBlock>
+                    <DataGrid Margin="5,5,2,5" x:Name="dgEquip" AlternatingRowBackground="#DDD" ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle1}"  Grid.Row="1" SelectionMode="Single" AutoGenerateColumns="False" SelectionChanged="dgEquip_SelectionChanged" CanUserAddRows="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn IsReadOnly="False" Width="2*" Header="设备名" Binding="{Binding Name,Mode=TwoWay}"></DataGridTextColumn>
+                            <DataGridComboBoxColumn x:Name="dgcEquipType" SelectedItemBinding="{Binding TypeName,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" IsReadOnly="False" Width="*" Header="设备类型"></DataGridComboBoxColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <DataGrid AlternatingRowBackground="#DDD" Margin="2,5,5,5" x:Name="dgIPInfo" ColumnHeaderStyle="{StaticResource DataGridColumnHeaderStyle1}" Grid.Row="1" Grid.Column="1" SelectionMode="Extended" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn IsReadOnly="False" Width="100" Header="IP地址" Binding="{Binding StrIP,Mode=TwoWay}"></DataGridTextColumn>
+                            <DataGridTextColumn IsReadOnly="False" Width="100" Header="掩码" Binding="{Binding StrIPMask,Mode=TwoWay}"></DataGridTextColumn>
+                            <DataGridTextColumn IsReadOnly="False" Width="100" Header="网关" Binding="{Binding StrIPGateWay,Mode=TwoWay}"></DataGridTextColumn>
+                            <DataGridTextColumn IsReadOnly="False" Width="*" Header="名称" Binding="{Binding IpName,Mode=TwoWay}"></DataGridTextColumn>
+                            <DataGridComboBoxColumn x:Name="dgcEquipName" SelectedItemBinding="{Binding EquipName,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" IsReadOnly="False" Width="*" Header="所属设备"></DataGridComboBoxColumn>
+                            <DataGridTemplateColumn Width="70" Header="管理地址？">
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <RadioButton HorizontalAlignment="Center" VerticalAlignment="Center" IsChecked="{Binding IsDefaultIP, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" GroupName="{Binding EquipName}"></RadioButton>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <Button Content="所有IP" Grid.Column="1" Height="20" HorizontalAlignment="Right" Margin="0,0,10,0" Name="btnAllIP" VerticalAlignment="Center" Width="60" Click="btnAllIP_Click" />
+                    <StackPanel Grid.Row="2" Name="spEquipEditArea" Orientation="Horizontal">
+                        <TextBox ToolTip="设备名称" ToolTipService.InitialShowDelay="0" x:Name="tbAddEquipName" Width="100" Margin="5,0,0,0"></TextBox>
+                        <ComboBox x:Name="cbbAddEquipType" Text="选择类型" IsEditable="True"  IsReadOnly="True" Width="100" Margin="5,0,0,0"></ComboBox>
+                        <Button Content="添加" VerticalContentAlignment="Center" x:Name="btnAddEquip" Width="35" Height="20" Margin="5,0,0,0" Click="btnAddEquip_Click"></Button>
+                        <Button Content="删除" VerticalContentAlignment="Center" x:Name="btnDelEquip" Width="35" Height="20" Margin="5,0,0,0" Click="btnDelEquip_Click"></Button>
+                    </StackPanel>
+                    <StackPanel Grid.Row="2" Grid.Column="1"  Name="spIPEditArea" Orientation="Horizontal">
+                        <TextBox ToolTip="IP地址" ToolTipService.InitialShowDelay="0" x:Name="tbAddIP" Width="100" Margin="5,0,0,0"></TextBox>
+                        <TextBox ToolTip="子网掩码" ToolTipService.InitialShowDelay="0" x:Name="tbAddMask" Width="100" Margin="5,0,0,0"></TextBox>
+                        <TextBox ToolTip="网关" ToolTipService.InitialShowDelay="0" x:Name="tbAddGateway" Width="100" Margin="5,0,0,0"></TextBox>
+                        <TextBox ToolTip="IP名称" ToolTipService.InitialShowDelay="0" x:Name="tbAddIPName" Text="" Width="120" Margin="5,0,0,0"></TextBox>
+                        <ComboBox x:Name="cbbAddIPEquipName" Text="选择设备" IsEditable="True"  IsReadOnly="True" Width="100" Margin="5,0,0,0"></ComboBox>
+                        <Button Content="添加" VerticalContentAlignment="Center" x:Name="btnAddIP" Width="35" Height="20" Margin="5,0,0,0" Click="btnAddIP_Click"></Button>
+                        <Button Content="删除" VerticalContentAlignment="Center" x:Name="btnDelIP" Width="35" Height="20" Margin="5,0,0,0" Click="btnDelIP_Click"></Button>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+        	<TabItem Header="端口管理">
+                <Grid x:Name="grid2">
+                    <TextBlock x:Name="tb" Text="tb"></TextBlock>
+
+                </Grid>
+        	</TabItem>
+        	<TabItem Header="SNMP">
+                <Grid ShowGridLines="True">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="5*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="4*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="btnSNMPSave" Content="保存" HorizontalAlignment="Right"  Grid.Column="1" Grid.Row="7" VerticalAlignment="Top" Margin="0,23,387,0" Grid.ColumnSpan="2" Width="65" Click="btnSNMPSave_Click" />
+                    <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Text="共同体名(Community)：" Grid.Column="1" Grid.Row="1" Margin="77,12,0,12" />
+                    <TextBox x:Name="tbSNMPCommunity"  Width="80" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="24,9,0,9" />
+                    <TextBlock Grid.Column="1" Grid.Row="2" Text="SNMP端口：" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="140,12,0,12" />
+                    <TextBox x:Name="tbSNMPPort"  Width="80" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="2" Grid.Row="2" Margin="24,9,0,9" />
+                    <CheckBox x:Name="cbSNMPSourceCheckFlag"  Grid.Column="2" Grid.Row="6" Height="16" HorizontalAlignment="Left" Margin="24,0,0,0" VerticalAlignment="Center" />
+                    <TextBlock HorizontalAlignment="Left" Margin="68,11,0,13" Text="SNMP应答包源地址校对：" VerticalAlignment="Center" Grid.Column="1" Grid.Row="6" />
+                    <TextBlock HorizontalAlignment="Left" Margin="106,12,0,12" Text="SNMP TRAP端口：" VerticalAlignment="Center" Grid.Column="1" Grid.Row="3" />
+                    <TextBox x:Name="tbSNMPTrapPort"  HorizontalAlignment="Left" Margin="24,9,0,9" VerticalAlignment="Center" Width="80" Grid.Column="2" Grid.Row="3" />
+                    <TextBlock HorizontalAlignment="Left" Margin="127,13,0,11" Text="超时时间(ms)：" VerticalAlignment="Center" Grid.Column="1" Grid.Row="4" />
+                    <TextBlock HorizontalAlignment="Left" Margin="152,11,0,13" Text="重试次数：" VerticalAlignment="Center" Grid.Column="1" Grid.Row="5" />
+                    <TextBox x:Name="tbSNMPRetry"  HorizontalAlignment="Left" Margin="24,8,0,11" VerticalAlignment="Center" Width="80" Grid.Column="2" Grid.Row="5" />
+                    <TextBox x:Name="tbSNMPTimeout"  HorizontalAlignment="Left" Margin="24,11,0,9" VerticalAlignment="Center" Width="80" Grid.Column="2" Grid.Row="4" />
+                    <TextBlock HorizontalAlignment="Left" Margin="48,0,180,0" TextWrapping="Wrap" Grid.ColumnSpan="2"  Text="(个别设备配置多个IP地址，请求某一个地址的snmp信息时，返回数据包源地址会自动设置为设备的默认地址，若开启校对，则会认为数据包没有返回)" VerticalAlignment="Center" Grid.Column="2" Grid.Row="6" />
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Border>
+</UserControl>

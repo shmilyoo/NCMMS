@@ -1,0 +1,33 @@
+﻿<UserControl x:Class="NCMMS.UC.UCIPTextBox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="20" d:DesignWidth="200" DataContext="{Binding RelativeSource={RelativeSource self}}">
+    <StackPanel x:Name="grid" Orientation="Horizontal">
+        <StackPanel.Resources>
+            <Style TargetType="{x:Type TextBox}">
+                <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="MinWidth" Value="27" />
+                <Setter Property="HorizontalAlignment" Value="Center" />
+                <Setter Property="BorderThickness" Value="0" />
+            </Style>
+            <Style TargetType="{x:Type TextBlock}">
+                <Setter Property="VerticalAlignment" Value="Center" />
+                <Setter Property="HorizontalAlignment" Value="Center" />
+            </Style>
+        </StackPanel.Resources>
+        <Border BorderBrush="#7000" BorderThickness="1"  Background="White">
+            <StackPanel Margin="2,0,0,0" Orientation="Horizontal">
+                <TextBox TextAlignment="Center" MaxLength="3" x:Name="ip1" KeyUp="ip1_KeyUp"  TextChanged="ip1_TextChanged"></TextBox>
+                <TextBlock Text="." Grid.Column="1"></TextBlock>
+                <TextBox TextAlignment="Center" MaxLength="3" x:Name="ip2" KeyUp="ip2_KeyUp"  TextChanged="ip2_TextChanged"></TextBox>
+                <TextBlock Text="."></TextBlock>
+                <TextBox TextAlignment="Center" MaxLength="3" x:Name="ip3" KeyUp="ip3_KeyUp"  TextChanged="ip3_TextChanged"></TextBox>
+                <TextBlock Text="."></TextBlock>
+                <TextBox TextAlignment="Center" MaxLength="3" x:Name="ip4" TextChanged="ip4_TextChanged"></TextBox>
+                </StackPanel>
+        </Border>
+    </StackPanel>
+</UserControl>

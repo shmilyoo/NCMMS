@@ -1,0 +1,48 @@
+﻿<UserControl x:Class="NCMMS.UC.UCEquipIcon"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="70" d:DesignWidth="110">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="30" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="30" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="20" />
+        </Grid.RowDefinitions>
+        <Border x:Name="border" Grid.Column="1" BorderThickness="1">
+            <Grid x:Name="grid" ShowGridLines="False">
+                <Grid.ContextMenu>
+                    <ContextMenu Width="100">
+                        <MenuItem Header="重命名" Click="ContextMenu_ReName"></MenuItem>
+                        <MenuItem Header="设备信息" Click="ContextMenu_ShowEquipInfo"></MenuItem>
+                        <MenuItem Header="Ping" Click="ContextMenu_Ping"></MenuItem>
+                        <MenuItem Header="Telnet" Click="ContextMenu_Telnet"></MenuItem>
+                        <MenuItem Header="删除" Click="ContextMenu_Delete"></MenuItem>
+                    </ContextMenu>
+                </Grid.ContextMenu>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="2*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="3*" />
+                </Grid.RowDefinitions>
+                <Grid x:Name="gridMessageNum" Grid.Column="2" Panel.ZIndex="3">
+                    <Path x:Name="messageBackColor" Fill="LightGreen" Stretch="Fill" Data="M20,10 C20,15.522847 15.522847,20 10,20 C4.4771525,20 0,15.522847 0,10 C0,4.4771525 4.4771525,0 10,0 C15.522847,0 20,4.4771525 20,10 z"/>
+                    <TextBlock x:Name="tbmessage" Text="0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="16"></TextBlock>
+                </Grid>
+                <Image x:Name="brandImage" Source="{x:Null}" Grid.Row="2" Stretch="Fill" Opacity="0.7" Panel.ZIndex="3"></Image>
+                <Image x:Name="equipImage" Grid.RowSpan="3" Grid.ColumnSpan="2" Stretch="Fill" Panel.ZIndex="2" Source="/NCMMS;component/Images/Router.png"></Image>
+            </Grid>
+        </Border>
+        <TextBlock x:Name="tbName" FontWeight="Bold" FontSize="12" Grid.Row="2" VerticalAlignment="Center" TextAlignment="Center" Grid.ColumnSpan="3"></TextBlock>
+    </Grid>
+</UserControl>

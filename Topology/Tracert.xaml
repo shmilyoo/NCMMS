@@ -1,0 +1,20 @@
+﻿<Window x:Class="NCMMS.Topology.Tracert"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Tracert" Height="200" Width="300">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5*"/>
+            <RowDefinition Height="4*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="96*"/>
+            <ColumnDefinition Width="135*"/>
+            <ColumnDefinition Width="62*"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock HorizontalAlignment="Left" Margin="59,71,0,0" TextWrapping="Wrap" Text="目标:" VerticalAlignment="Top"/>
+        <TextBox Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="23" Margin="95,72,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
+        <Button Content="开始" Grid.Column="1" HorizontalAlignment="Left" Margin="10,9.906,0,0" Grid.Row="1" VerticalAlignment="Top" Width="75"/>
+
+    </Grid>
+</Window>

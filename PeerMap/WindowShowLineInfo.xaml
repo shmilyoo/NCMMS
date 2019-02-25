@@ -1,0 +1,125 @@
+﻿<UserControl  x:Class="NCMMS.PeerMap.WindowShowLineInfo"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" Height="164" Width="360" >
+    <UserControl.Resources>
+		<Style TargetType="{x:Type TextBlock}">
+			<Setter Property="VerticalAlignment" Value="Center"/>
+			<Setter Property="HorizontalAlignment" Value="Center"/>
+		</Style>
+		<Style TargetType="{x:Type Border}">
+			<Setter Property="BorderBrush" Value="Gray"/>
+		</Style>
+    </UserControl.Resources>
+
+    <Grid Width="350" Margin="5">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="26*"/>
+            <ColumnDefinition Width="15*"/>
+            <ColumnDefinition Width="19*"/>
+            <ColumnDefinition Width="20*"/>
+            <ColumnDefinition Width="20*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="2"/>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="2"/>
+            <RowDefinition Height="25"/>
+        </Grid.RowDefinitions>
+        <Border BorderThickness="0" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="5">
+            <TextBlock x:Name="tbIP" Text="IP" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+        </Border>
+        <Border BorderThickness="1,1,0,0" Grid.Row="2" Grid.Column="0">
+            <Border.Background>
+                <SolidColorBrush Color="#FFCACBCC"/>
+            </Border.Background>
+            <TextBlock x:Name="tbSrcIP" Text="srcIP"/>
+        </Border>
+        <Border BorderThickness="1,1,0,0" Grid.Row="2" Grid.Column="1">
+            <TextBlock x:Name="sentPackets" Text="?"/>
+        </Border>
+        <Border BorderThickness="1,1,0,0" Grid.Row="2" Grid.Column="2">
+            <TextBlock x:Name="sentBytes" Text="?"/>
+        </Border>
+        <Border BorderThickness="1,1,0,0" Grid.Row="2" Grid.Column="3">
+            <TextBlock x:Name="sentSpeed" Text="?"/>
+        </Border>
+        <Border BorderThickness="1,1,1,0" Grid.Row="2" Grid.Column="4">
+            <TextBlock x:Name="sentPercent" Text="?"/>
+        </Border>
+        <Border BorderThickness="1,1,0,1" Grid.Row="3" Grid.Column="0">
+            <Border.Background>
+                <SolidColorBrush Color="#FFCACBCC"/>
+            </Border.Background>
+            <TextBlock x:Name="tbDstIP" Text="dstIP"/>
+        </Border>
+        <Border BorderThickness="1,1,0,1" Grid.Row="3" Grid.Column="1">
+            <TextBlock x:Name="rcvPackets" Text="?"/>
+        </Border>
+        <Border BorderThickness="1,1,0,1" Grid.Row="3" Grid.Column="2">
+            <TextBlock x:Name="rcvBytes" Text="?"/>
+        </Border>
+        <Border BorderThickness="1,1,0,1" Grid.Row="3" Grid.Column="3">
+            <TextBlock x:Name="rcvSpeed" Text="?"/>
+        </Border>
+        <Border BorderThickness="1" Grid.Row="3" Grid.Column="4">
+            <TextBlock x:Name="rcvPercent" Text="?"/>
+        </Border>
+        <Border BorderThickness="1,1,0,0" Grid.Row="1" Grid.Column="1">
+            <Border.Background>
+                <SolidColorBrush Color="#FFCACBCC"/>
+            </Border.Background>
+            <TextBlock Text="Packets" />
+        </Border>
+        <Border BorderThickness="1,1,0,0" Grid.Row="1" Grid.Column="2">
+            <Border.Background>
+                <SolidColorBrush Color="#FFCACBCC"/>
+            </Border.Background>
+            <TextBlock Text="Bytes"/>
+        </Border>
+        <Border BorderThickness="1,1,0,0" Grid.Row="1" Grid.Column="3">
+            <Border.Background>
+                <SolidColorBrush Color="#FFCACBCC"/>
+            </Border.Background>
+            <TextBlock Text="kbits/s"/>
+        </Border>
+        <Border BorderThickness="1,1,1,0" Grid.Row="1" Grid.Column="4">
+            <Border.Background>
+                <SolidColorBrush Color="#FFCACBCC"/>
+            </Border.Background>
+            <TextBlock Text="% of Total"/>
+        </Border>
+        <Border BorderThickness="1,1,0,1" Grid.Row="5" Grid.Column="0">
+            <Border.Background>
+                <SolidColorBrush Color="#FFCACBCC"/>
+            </Border.Background>
+            <TextBlock Text="Sum"/>
+        </Border>
+        <Border BorderThickness="1,1,0,1" Grid.Row="5" Grid.Column="1">
+            <TextBlock x:Name="sumPackets" Text="?"/>
+        </Border>
+        <Border BorderThickness="1,1,0,1" Grid.Row="5" Grid.Column="2">
+            <TextBlock x:Name="sumBytes" Text="?"/>
+        </Border>
+        <Border BorderThickness="1,1,0,1" Grid.Row="5" Grid.Column="3">
+            <TextBlock x:Name="sumSpeed" Text="?"/>
+        </Border>
+        <Border BorderThickness="1" Grid.Row="5" Grid.Column="4">
+            <TextBlock x:Name="sumPercent" Text="?"/>
+        </Border>
+        <!--<Border BorderThickness="1,1,0,1" Grid.Row="7" Grid.Column="0">
+            <Border.Background>
+                <SolidColorBrush Color="#FFCACBCC"/>
+            </Border.Background>
+            <TextBlock Text="Protocols"/>
+        </Border>-->
+        <Border BorderThickness="1,1,1,1" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="5">
+            <TextBlock x:Name="protocols" Text="?"/>
+        </Border>
+  
+    </Grid>
+</UserControl>

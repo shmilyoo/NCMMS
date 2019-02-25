@@ -1,0 +1,171 @@
+﻿<local:MyWindow
+        xmlns:uc="clr-namespace:NCMMS.UC"
+        xmlns:local="clr-namespace:NCMMS"
+        xmlns:commonClass="clr-namespace:NCMMS.CommonClass"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="NCMMS.MultiPing.MultiPing"
+        DataContext="{Binding RelativeSource={RelativeSource Self}}"
+        WindowTitle="群Ping测试" BtnMaxFlag="True"  WindowStartupLocation="CenterOwner" MinHeight="600" MinWidth="700" Height="768" Icon="/NCMMS;component/Images/digitalWav.ico">
+    <local:MyWindow.Resources>
+        <commonClass:BoolToBoolConverter x:Key="boolToBoolConverter"/>
+        <commonClass:BoolToVisibleConverter x:Key="boolToVisibleConverter"/>
+        <commonClass:BoolToColorConverter x:Key="boolToColorConverter"/>
+        <commonClass:StateToImageUrlConverter x:Key="stateToImageUrlConverter"/>
+        <!--<commonClass:BoolToColorStringConverter x:Key="boolToColorStringConverter"></commonClass:BoolToColorStringConverter>-->
+        <commonClass:IntToDelayStringConverter x:Key="intToDelayStringConverter"/>
+        <commonClass:BoolToIPTextColorConverter x:Key="boolToIPTextColorConverter"/>
+
+        <Style TargetType="{x:Type ListBoxItem}">
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                        <Border x:Name="bd" BorderThickness="0,0,0,1" Padding="5,0" BorderBrush="#AAAA">
+                            <Grid Background="#1FFF">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="110" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="20" />
+                                    <ColumnDefinition Width="250" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock HorizontalAlignment="Left" Cursor="Hand" VerticalAlignment="Center" Margin="10,0,0,0"  Text="{Binding StrIP}" Foreground="{Binding IsPingOK, Converter={StaticResource boolToIPTextColorConverter}}" MouseLeftButtonDown="StrIP_MouseLeftButtonDown" ToolTip="{Binding IPName}" ToolTipService.InitialShowDelay="0" />
+                                <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" Grid.Column="1" Text="{Binding IPName}"/>
+                                <Ellipse HorizontalAlignment="Center" Cursor="Hand" ToolTip="打开回显信息列表" Grid.Column="2" Width="20" Height="20"  Stroke="Gray" StrokeThickness="2" Fill="{Binding IsPingOK, Converter={StaticResource boolToColorConverter}}" MouseLeftButtonDown="Ellipse_MouseLeftButtonDown" />
+                                <StackPanel HorizontalAlignment="Right" Margin="0,0,10,0" VerticalAlignment="Center"  Orientation="Horizontal" Grid.Column="3">
+                                    <TextBlock Text="{Binding PacketLostNum}" VerticalAlignment="Center" ToolTip="丢包数" />
+                                    <TextBlock Text=" / " VerticalAlignment="Center" />
+                                    <TextBlock Text="{Binding PacketSendNum}" VerticalAlignment="Center" ToolTip="发出包总数" />
+                                    <TextBlock Text="{Binding Delay, Converter={StaticResource intToDelayStringConverter}}" ToolTip="时延" VerticalAlignment="Center" Margin="10,0,0,0" />
+                                    <CheckBox x:Name="isRecord" IsChecked="{Binding IsRecord}" VerticalAlignment="Center" Margin="10,0,0,0" ToolTip="是否记录Ping结果" />
+                                    <Button x:Name="btnStartPause" Margin="10,0,0,0" Click="btnStartPause_Click" Width="20" Height="20" >
+                                        <Image Source="{Binding PingState, Converter={StaticResource stateToImageUrlConverter}}" />
+                                    </Button>
+                                    <Button x:Name="btnStop" Margin="5,0,0,0" Click="btnStop_Click" Width="20" Height="20" >
+                                        <Image Source="/NCMMS;component/Images/icoStop.png" />
+                                    </Button>
+                                    <Button x:Name="btnDel" Margin="5,0,0,0" Click="btnDel_Click" Width="20" Height="20">
+                                        <Image Source="/NCMMS;component/Images/icoDelete.png" />
+                                    </Button>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="true">
+                                <Setter Property="Background" TargetName="bd" Value="#FFD1FFCB"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style TargetType="{x:Type ListBox}" x:Key="listBoxStyle">
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="SelectionMode" Value="Extended" />
+        </Style>
+    </local:MyWindow.Resources>
+    <local:MyWindow.Style>
+        <StaticResource ResourceKey="WindowNoStyle"/>
+    </local:MyWindow.Style>
+    <DockPanel>
+        <ToolBar Height="30" BorderThickness="0"  DockPanel.Dock="Top" Background="White">
+            <ComboBox x:Name="cbSelectSide" SelectedIndex="1" ToolTip="添加IP地址放置在哪一侧">
+                <ComboBoxItem Content="全部"/>
+                <ComboBoxItem Content="左侧"/>
+                <ComboBoxItem Content="右侧"/>
+            </ComboBox>
+            <uc:UCIPInsert x:Name="multiIPInsert"/>
+            <Separator Width="2" Margin="5,0"/>
+            <uc:UCIPSelectorFormEquip x:Name="ipSelector"/>
+            <Button Margin="2,0,0,0" Padding="0"  Width="20" Style="{x:Null}" x:Name="btnAddIP" Click="btnAddIP_Click">
+                <Image Source="/NCMMS;component/Images/icoAdd.gif"/>
+            </Button>
+            <Separator Width="2" Margin="5,0"/>
+            <RadioButton Padding="0" ToolTip="单列显示" IsChecked ="{Binding IsSingleColumn, Mode=TwoWay}">
+                <Image Source="/NCMMS;component/Images/singleColumn.png" />
+            </RadioButton>
+            <RadioButton Padding="0" ToolTip="双列显示" IsChecked ="{Binding IsSingleColumn, Converter={StaticResource boolToBoolConverter}, Mode=OneWay}">
+                <Image Source="/NCMMS;component/Images/twoColumn.png" />
+            </RadioButton>
+            <Separator Width="2" Margin="5,0"/>
+            <Button x:Name="btnSave" Padding="0" ToolTip="保存布局" Click="btnSave_Click">
+                <Image Source="/NCMMS;component/Images/save.png" />
+            </Button>
+            <CheckBox x:Name="cBoxSelectAll" Padding="0" Click="cBoxSelectAll_Click"  ToolTip="全部启用记录日志">
+                <Image Source="/NCMMS;component/Images/selectAll.png" />
+            </CheckBox>
+            <CheckBox x:Name="btnAlarm" IsChecked="{Binding IsAlarm}"  Padding="0" ToolTip="是否启用报警音">
+                <Image Source="/NCMMS;component/Images/alarm.png" />
+            </CheckBox>
+            <Button x:Name="btnConfig" Click="btnConfig_Click" Padding="0" ToolTip="配置">
+                <Image Source="/NCMMS;component/Images/config.png" />
+            </Button>
+            <Button x:Name="btnHelp" Padding="0" ToolTip="帮助" Click="btnHelp_Click">
+                <Image Source="/NCMMS;component/Images/help.png" />
+            </Button>
+        </ToolBar>
+        <Border Margin="2" CornerRadius="5"  BorderBrush="#7777" BorderThickness="1">
+            <Grid x:Name="grid">
+                <DockPanel>
+                    <StackPanel Margin="0,5,0,0" Height="25" Orientation="Horizontal" DockPanel.Dock="Top">
+			            <Button x:Name="btnAllStart" Margin="15,0,0,0" ToolTip="全部开始" Click="btnAllStart_Click">
+			                <Image Source="/NCMMS;component/Images/start.png" />
+			            </Button>
+			            <Button x:Name="btnAllPause" Margin="5,0,0,0" ToolTip="全部暂停" Click="btnAllPause_Click">
+			                <Image Source="/NCMMS;component/Images/pause.png" />
+			            </Button>
+			            <Button x:Name="btnAllStop" Margin="5,0,0,0" ToolTip="全部停止" Click="btnAllStop_Click">
+			                <Image Source="/NCMMS;component/Images/stop.png" />
+			            </Button>
+                        <Button x:Name="btnMoveUp" Margin="5,0,0,0" Click="btnMoveUp_Click">
+                            <Image Source="/NCMMS;component/Images/moveUp.png" />
+                        </Button>
+                        <Button x:Name="btnMoveDown" Margin="5,0,0,0" Click="btnMoveDown_Click">
+                            <Image Source="/NCMMS;component/Images/moveDown.png" />
+                        </Button>
+                        <Button x:Name="btnMoveTop" Margin="5,0,0,0" Click="btnMoveTop_Click">
+                            <Image Source="/NCMMS;component/Images/moveTop.png" />
+                        </Button>
+                        <Button x:Name="btnMoveBottom" Margin="5,0,0,0" Click="btnMoveBottom_Click" >
+                            <Image Source="/NCMMS;component/Images/moveBottom.png" />
+                        </Button>
+                        <Button x:Name="btnClear" Margin="5,0,0,0" Click="btnClear_Click" >
+                            <Image Source="/NCMMS;component/Images/Trash32X32.png" />
+                        </Button>
+                    </StackPanel>
+                    <ListBox x:Name="listBox1" Style="{StaticResource listBoxStyle}"/>
+                </DockPanel>
+                <GridSplitter x:Name="gridSplitter" Visibility="{Binding IsSingleColumn, Converter={StaticResource boolToVisibleConverter}, Mode=OneWay}"  Grid.Column="1" Width="2" Background="#7777" HorizontalAlignment="Center" VerticalAlignment="Stretch"/>
+                <DockPanel Visibility="{Binding IsSingleColumn, Converter={StaticResource boolToVisibleConverter}, Mode=OneWay}" Grid.Column="2">
+                    <StackPanel Margin="0,5,0,0" Height="25" Orientation="Horizontal" DockPanel.Dock="Top">
+			            <Button x:Name="btnAllStart2" Margin="15,0,0,0" ToolTip="全部开始" Click="btnAllStart2_Click">
+			                <Image Source="/NCMMS;component/Images/start.png" />
+			            </Button>
+			            <Button x:Name="btnAllPause2" Margin="5,0,0,0" ToolTip="全部暂停" Click="btnAllPause2_Click">
+			                <Image Source="/NCMMS;component/Images/pause.png" />
+			            </Button>
+			            <Button x:Name="btnAllStop2" Margin="5,0,0,0" ToolTip="全部停止" Click="btnAllStop2_Click">
+			                <Image Source="/NCMMS;component/Images/stop.png" />
+			            </Button>
+                        <Button x:Name="btnMoveUp2" Margin="5,0,0,0" Click="btnMoveUp2_Click">
+                            <Image Source="/NCMMS;component/Images/moveUp.png" />
+                        </Button>
+                        <Button x:Name="btnMoveDown2" Margin="5,0,0,0" Click="btnMoveDown2_Click">
+                            <Image Source="/NCMMS;component/Images/moveDown.png" />
+                        </Button>
+                        <Button x:Name="btnMoveTop2" Margin="5,0,0,0" Click="btnMoveTop2_Click">
+                            <Image Source="/NCMMS;component/Images/moveTop.png" />
+                        </Button>
+                        <Button x:Name="btnMoveBottom2" Margin="5,0,0,0" Click="btnMoveBottom2_Click" >
+                            <Image Source="/NCMMS;component/Images/moveBottom.png" />
+                        </Button>
+                        <Button x:Name="btnClear2" Margin="5,0,0,0" Click="btnClear2_Click" >
+                            <Image Source="/NCMMS;component/Images/Trash32X32.png" />
+                        </Button>
+                    </StackPanel>
+                    <ListBox x:Name="listBox2" Style="{StaticResource listBoxStyle}"/>
+                </DockPanel>
+				</Grid>
+        </Border>
+    </DockPanel>
+</local:MyWindow>

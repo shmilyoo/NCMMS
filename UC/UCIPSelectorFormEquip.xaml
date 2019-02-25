@@ -1,0 +1,12 @@
+﻿<UserControl x:Class="NCMMS.UC.UCIPSelectorFormEquip"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="20" d:DesignWidth="200" DataContext="{Binding RelativeSource={RelativeSource self}}">
+    <StackPanel Orientation="Horizontal">
+        <ComboBox SelectionChanged="coBoxEquips_SelectionChanged" MinWidth="50" x:Name="coBoxEquips" Text="选择设备" IsEditable="True"  IsReadOnly="True"></ComboBox>
+        <ComboBox SelectionChanged="coBoxIPs_SelectionChanged"  MinWidth="50" x:Name="coBoxIPs" Text="选择地址" IsEditable="True"  IsReadOnly="True"></ComboBox>
+    </StackPanel>
+</UserControl>

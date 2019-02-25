@@ -1,0 +1,31 @@
+﻿<UserControl x:Class="NCMMS.PeerMap.PeerMapStart"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="585" d:DesignWidth="996" Height="585" Width="996">
+    <Border Style="{StaticResource BorderInCanvasStyle}">
+        <Grid >
+        	<Grid.ColumnDefinitions>
+        		<ColumnDefinition Width="0.482*"/>
+        		<ColumnDefinition Width="0.518*"/>
+        	</Grid.ColumnDefinitions>
+        	<Grid.RowDefinitions>
+        		<RowDefinition Height="0.103*"/>
+        		<RowDefinition Height="0.556*"/>
+        		<RowDefinition Height="0.237*"/>
+        		<RowDefinition Height="0.104*"/>
+        	</Grid.RowDefinitions>
+        	<TextBlock Text="PeerMap矩阵图网络流量监视系统" Grid.ColumnSpan="2" Style="{StaticResource StartPageTBTitle}" />
+            <GroupBox x:Name="gBoxPeerMap" Margin="20"  Header="选择捕获数据包的适配器" Grid.Row="1" Grid.ColumnSpan="2">
+                <Canvas x:Name="canvas">
+                    <TextBlock x:Name="lblMessage" HorizontalAlignment="Left" Text="TextBlock" VerticalAlignment="Top" Margin="51.56,23.957,0,0"/>
+                </Canvas>
+            </GroupBox>
+            <Button x:Name="btnPeerMapWPF" Background="LightBlue" Content="显示PeerMap" HorizontalAlignment="Right" Margin="0,31.049,8,0" Grid.Row="2" Width="93.055" Height="20.687" VerticalAlignment="Top" Click="BtnPeerMapWPF_Click" />
+        	
+            
+        </Grid>
+    </Border>
+</UserControl>

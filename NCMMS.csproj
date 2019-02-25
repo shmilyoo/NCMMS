@@ -1,0 +1,430 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{A571CD91-5CBB-4B6F-BAAF-259F1487D313}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NCMMS</RootNamespace>
+    <AssemblyName>NCMMS</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <Utf8Output>true</Utf8Output>
+    <ExpressionBlendVersion>4.0.20621.0</ExpressionBlendVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Images\earth.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Expression.Drawing" />
+    <Reference Include="Microsoft.Expression.Effects" />
+    <Reference Include="Microsoft.Expression.Interactions" />
+    <Reference Include="PacketDotNet, Version=0.13.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Library\PacketDotNet.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpPcap, Version=4.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Library\SharpPcap.dll</HintPath>
+    </Reference>
+    <Reference Include="Swordfish.NET.General, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Library\Swordfish.NET.General.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="UIAutomationProvider" />
+    <Reference Include="UIAutomationTypes" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="WPFVisifire.Charts, Version=5.1.1.0, Culture=neutral, PublicKeyToken=0cd785983078370b, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Library\WPFVisifire.Charts.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="CommonClass\AsyncObservableCollection.cs" />
+    <Compile Include="CommonClass\DBHelp.cs" />
+    <Compile Include="CommonClass\Equipment.cs" />
+    <Compile Include="CommonClass\IPInformation.cs" />
+    <Compile Include="CommonClass\SnmpHelper.cs" />
+    <Compile Include="CommonClass\Subnet.cs" />
+    <Compile Include="CommonClass\TopoData.cs" />
+    <Compile Include="CommonClass\ValueConverters.cs" />
+    <Compile Include="Config\ConfigStart.xaml.cs">
+      <DependentUpon>ConfigStart.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Config\Equip4DB.cs" />
+    <Compile Include="Config\IPInfor4DB.cs" />
+    <Compile Include="Help\HelpStart.xaml.cs">
+      <DependentUpon>HelpStart.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MultiPing\MultiPing.xaml.cs">
+      <DependentUpon>MultiPing.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MultiPing\MultiPingConfig.xaml.cs">
+      <DependentUpon>MultiPingConfig.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MultiPing\MultiPingShowReply.xaml.cs">
+      <DependentUpon>MultiPingShowReply.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MultiPing\MultiPingStart.xaml.cs">
+      <DependentUpon>MultiPingStart.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MultiPing\PingTarget.cs" />
+    <Compile Include="MultiPing\MultiPingConfigForSingleIP.xaml.cs">
+      <DependentUpon>MultiPingConfigForSingleIP.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MyWindow.cs" />
+    <Compile Include="PeerMap\EllipseInfo.cs" />
+    <Compile Include="PeerMap\PeerMapPeerInfo.cs" />
+    <Compile Include="PeerMap\PeerMapShow.xaml.cs">
+      <DependentUpon>PeerMapShow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PeerMap\PeerMapStart.xaml.cs">
+      <DependentUpon>PeerMapStart.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PeerMap\WindowShowEllipseInfo.xaml.cs">
+      <DependentUpon>WindowShowEllipseInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PeerMap\WindowShowLineInfo.xaml.cs">
+      <DependentUpon>WindowShowLineInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PortMonitor\Interface.cs" />
+    <Compile Include="PortMonitor\PortMonitor.xaml.cs">
+      <DependentUpon>PortMonitor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="PortMonitor\PortMonitorStart.xaml.cs">
+      <DependentUpon>PortMonitorStart.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Settings.cs" />
+    <Compile Include="StartPage.xaml.cs">
+      <DependentUpon>StartPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Topology\DrawMatrix.xaml.cs">
+      <DependentUpon>DrawMatrix.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Topology\ModifyEquipName.xaml.cs">
+      <DependentUpon>ModifyEquipName.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Topology\ShowEquipInfo.xaml.cs">
+      <DependentUpon>ShowEquipInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Topology\TopoMain.xaml.cs">
+      <DependentUpon>TopoMain.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Topology\TopoStart.xaml.cs">
+      <DependentUpon>TopoStart.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Topology\Tracert.xaml.cs">
+      <DependentUpon>Tracert.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UC\UCEquipIcon.xaml.cs">
+      <DependentUpon>UCEquipIcon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UC\UCFileBrowse.xaml.cs">
+      <DependentUpon>UCFileBrowse.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UC\UCIPInsert.xaml.cs">
+      <DependentUpon>UCIPInsert.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UC\UCIPSelectorFormEquip.xaml.cs">
+      <DependentUpon>UCIPSelectorFormEquip.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UC\UCIPTextBox.xaml.cs">
+      <DependentUpon>UCIPTextBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UC\UCRepeatNum.xaml.cs">
+      <DependentUpon>UCRepeatNum.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Config\ConfigStart.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Help\HelpStart.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="MultiPing\MultiPing.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MultiPing\MultiPingConfig.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MultiPing\MultiPingShowReply.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MultiPing\MultiPingStart.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MultiPing\MultiPingConfigForSingleIP.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PeerMap\PeerMapShow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PeerMap\PeerMapStart.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PeerMap\WindowShowEllipseInfo.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PeerMap\WindowShowLineInfo.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PortMonitor\PortMonitor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="PortMonitor\PortMonitorStart.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="RDMyWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ResourceDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="StartPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Topology\DrawMatrix.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Topology\ModifyEquipName.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Topology\ShowEquipInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Topology\TopoMain.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Topology\TopoStart.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Topology\Tracert.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UC\UCEquipIcon.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UC\UCFileBrowse.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UC\UCIPInsert.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UC\UCIPSelectorFormEquip.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UC\UCIPTextBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UC\UCRepeatNum.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SnmpSharpNet-0-9-3-src\SnmpSharpNet.csproj">
+      <Project>{8E150D42-5D05-40F8-A388-C3A55EB4A141}</Project>
+      <Name>SnmpSharpNet</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\worldmap.png" />
+    <Resource Include="Images\cisco.png" />
+    <Resource Include="Images\firewall.png" />
+    <Resource Include="Images\huawei.png" />
+    <Resource Include="Images\hub.png" />
+    <Resource Include="Images\hub1.png" />
+    <Resource Include="Images\layer2Switch.png" />
+    <Resource Include="Images\layer3Switch.png" />
+    <Resource Include="Images\pc.png" />
+    <Resource Include="Images\router.png" />
+    <Resource Include="Images\server.png" />
+    <Resource Include="Images\serverInTable.png" />
+    <Resource Include="Images\question.png" />
+    <Resource Include="Images\huawei1.png" />
+    <Resource Include="Images\cisco1.png" />
+    <Resource Include="Images\Trash32X32.png" />
+    <Resource Include="Images\digitalWav.ico" />
+    <Resource Include="Images\earth.ico" />
+    <Resource Include="Images\blank1X1.png" />
+    <Resource Include="Images\H3C.png" />
+    <Resource Include="Images\Microsoft64X64.png" />
+    <Resource Include="earth.ico" />
+    <Content Include="Images\resource\galaxy-10996_1280.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\resource\galaxy-896925_1280.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\resource\nasa-140304_1920.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\resource\planet-67672_1920.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\resource\satellite-1030782_1920.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\resource\space-54999.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Library\Swordfish.NET.General.dll" />
+    <Content Include="Library\Swordfish.NET.General.pdb" />
+    <Content Include="Library\WPFVisifire.Charts.dll" />
+    <Resource Include="Images\icoAdd.gif" />
+    <Resource Include="Images\singleColumn.png" />
+    <Resource Include="Images\twoColumn.png" />
+    <Resource Include="Images\alarm.png" />
+    <Resource Include="Images\config.png" />
+    <Resource Include="Images\help.png" />
+    <Resource Include="Images\pause.png" />
+    <Resource Include="Images\save.png" />
+    <Resource Include="Images\start.png" />
+    <Resource Include="Images\stop.png" />
+    <Resource Include="Images\icoDelete.png" />
+    <Resource Include="Images\icoPause.png" />
+    <Resource Include="Images\icoStart.png" />
+    <Resource Include="Images\icoStop.png" />
+    <Resource Include="Images\moveBottom.png" />
+    <Resource Include="Images\moveDown.png" />
+    <Resource Include="Images\moveTop.png" />
+    <Resource Include="Images\moveUp.png" />
+    <Resource Include="Images\selectAll.png" />
+    <Content Include="alarm.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Library\PacketDotNet.dll" />
+    <Resource Include="Library\PacketDotNet.xml" />
+    <Content Include="Library\SharpPcap.dll" />
+    <Resource Include="Library\SharpPcap.xml" />
+    <SplashScreen Include="Images\startpic.jpg" />
+    <Content Include="Images\background.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="Images\close.png" />
+    <Resource Include="Images\maximize.png" />
+    <Resource Include="Images\minimize.png" />
+    <Resource Include="Images\restore.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\glass.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
